@@ -1,0 +1,206 @@
+import maya.cmds as cmds
+
+class showUI():
+    
+    def Transx(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.translatex)
+        cmds.setParent('..')
+    
+    def Transy(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.translatey)
+        cmds.setParent('..')
+        
+    def Transz(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.translatez)
+        cmds.setParent('..')
+        
+    def Rotx(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.rotatex)
+        cmds.setParent('..')
+        
+    def Roty(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.rotatey)
+        cmds.setParent('..')
+        
+    def Rotz(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.rotatez)
+        cmds.setParent('..')
+        
+    def Scalex(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.scalex)
+        cmds.setParent('..')
+        
+    def Scaley(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.scaley)
+        cmds.setParent('..')
+    
+    def Scalez(self, labelText):
+        cmds.rowLayout(numberOfColumns=2)
+        name = cmds.text(label=labelText)
+        cmds.button(label='OK', command=self.scalez)
+        cmds.setParent('..')
+    
+    def __init__(self):
+        self.win = cmds.window('Translate, Rotate, Scale', menuBar=True, widthHeight=(300,200))
+        
+        self.tab = cmds.tabLayout()
+        
+        fileName = cmds.menu(label='File')
+        loadMenu = cmds.menuItem(label='Load')
+        saveMenu = cmds.menuItem(label='Save')
+        
+        firstTab = cmds.columnLayout()
+        cmds.tabLayout(self.tab, edit=True, tabLabel=[firstTab,'Evaluate'])
+        
+        Translate_x = self.Transx('Translate x:')
+        Translate_y = self.Transy('Translate y:')
+        Translate_z = self.Transz('Translate z:')
+        Rotate_x = self.Rotx('Rotate x:')
+        Rotate_y = self.Roty('Rotate y:')
+        Rotate_z = self.Rotz('Rotate z:')
+        Scale_x = self.Scalex('Scale x:')
+        Scale_y = self.Scaley('Scale y:')
+        Scale_z = self.Scalez('Scale z:')
+        
+        cmds.showWindow(self.win)
+        
+    def translatex(self, *args):
+        enterInput = input('Enter translation amount: ')
+        num = eval(enterInput)
+        selectedObj = cmds.ls(selection=True)
+        obj = selectedObj[-1]
+        if '.f' in obj:
+            cmds.polyMoveFacet(localTranslateX=num)
+        elif '.e' in obj:
+            cmds.polyMoveEdge(translate=[num,0,0])
+        elif '.vtx' in obj:
+            cmds.polyMoveVertex(translate=[num,0,0])
+        
+            
+        
+    def translatey(self, *args):
+        enterInput = input('Enter translation amount: ')
+        num = eval(enterInput)
+        selectedObj = cmds.ls(selection=True)
+        obj = selectedObj[-1]
+        if '.f' in obj:
+            cmds.polyMoveFacet(localTranslateY=num)
+        elif '.e' in obj:
+            cmds.polyMoveEdge(translate=[0,num,0])
+        elif '.vtx' in obj:
+            cmds.polyMoveVertex(translate=[0,num,0])
+        
+    def translatez(self, *args):
+        enterInput = input('Enter translation amount: ')
+        num = eval(enterInput)
+        selectedObj = cmds.ls(selection=True)
+        obj = selectedObj[-1]
+        if '.f' in obj:
+            cmds.polyMoveFacet(localTranslateZ=num)
+        elif '.e' in obj:
+            cmds.polyMoveEdge(translate=[0,0,num])
+        elif '.vtx' in obj:
+            cmds.polyMoveVertex(translate=[0,0,num])
+        
+        
+    def rotatex(self, *args):
+        enterInput = input('Enter rotation amount: ')
+        num = eval(enterInput)
+        cmds.rotate(num, 0, 0)
+        
+    def rotatey(self, *args):
+        enterInput = input('Enter rotation amount: ')
+        num = eval(enterInput)
+        cmds.rotate(0, num, 0)
+        
+    def rotatez(self, *args):
+        enterInput = input('Enter rotation amount: ')
+        num = eval(enterInput)
+        cmds.rotate(0,0, num)  
+        
+    def scalex(self, *args):
+        enterInput = input('Enter scale amount: ')
+        num = eval(enterInput)
+        selectedObj = cmds.ls(selection=True)
+        obj = selectedObj[-1]
+        if '.f' in obj:
+            cmds.polyMoveFacet(localScaleX=num)
+        elif '.e' in obj:
+            cmds.polyMoveEdge(scale=[num,0,0])
+        elif '.vtx' in obj:
+            cmds.polyMoveVertex(scale=[num,0,0])
+        
+    def scaley(self, *args):
+        enterInput = input('Enter scale amount: ')
+        num = eval(enterInput)
+        selectedObj = cmds.ls(selection=True)
+        obj = selectedObj[-1]
+        if '.f' in obj:
+            cmds.polyMoveFacet(localScaleY=num)
+        elif '.e' in obj:
+            cmds.polyMoveEdge(scale=[0,num,0])
+        elif '.vtx' in obj:
+            cmds.polyMoveVertex(scale=[0,num,0])
+        
+    def scalez(self, *args):
+        enterInput = input('Enter scale amount: ')
+        num = eval(enterInput)
+        selectedObj = cmds.ls(selection=True)
+        obj = selectedObj[-1]
+        if '.f' in obj:
+            cmds.polyMoveFacet(localScaleZ=num)
+        elif '.e' in obj:
+            cmds.polyMoveEdge(scale=[0,0,num])
+        elif '.vtx' in obj:
+            cmds.polyMoveVertex(scale=[0,0,num])
+
+def objectSelection(obj):
+    shapeType = cmds.listRelatives(obj, shapes=True)
+    nodeType = cmds.nodeType(shapeType)
+    
+    if (nodeType == 'mesh'):
+        return True
+        
+    return False
+    
+def changeSelection():
+    selectedObj = cmds.ls(selection=True)
+    
+    if len(selectedObj) < 1:
+        cmds.error('Please select an object')
+    
+    lastSelected = selectedObj[-1]
+    for i in lastSelected:
+        if '.e' in lastSelected:
+            showUI()
+        elif '.f' in lastSelected:
+            showUI()
+        elif '.vtx' in lastSelected:
+            showUI()
+        elif '.vtxFace' in lastSelected:
+            showUI()
+    isPolygon = objectSelection(lastSelected)
+    
+    
+    if (isPolygon):
+        showUI()
+    else:
+        cmds.error('Please select an object')
+
+changeSelection()
